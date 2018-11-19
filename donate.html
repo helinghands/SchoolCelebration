@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="Shortcut Icon" href="./images/logo.jpg" type="image/x-icon">
+	<title>成都大学捐赠</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="./css/donate.css">
+  <!--   <script src="https://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"></script> -->
+  	<script src="./jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/donate.js"></script>
+    <script src="./js/donate_type.js"></script>
+    <script src="./js/donate_relation.js"></script>
+    <style>
+    	*{
+    		font-family: '宋体';
+    	}
+    	ul,li{
+    		list-style: none;
+    	}
+    </style>
+</head>
+<body>
+	<div class="donate-container">
+		<!-- 头部 -->
+		<div class="donate-header">
+			<div class="header-image">
+				<div class="header-image-item1">
+					<a href="#"><img src="./images/logo.png" alt=""></a>
+				</div>
+			</div>
+		</div>
+		<!-- 内容展示 -->
+		<div class="donate-content">
+			<div class="donate-content-item1">
+				<div class="content-item-left">
+					<img src="./images/01.jpg" alt="" style="width: 100%;height: 100%;">
+				</div>
+				<div class="content-item-right">
+					<div class="content-item-title">
+						<label>在线捐赠</label>
+					</div>
+					<div class="content-item-text">
+						<p>2018年12月8日，学校将迎来建校40周年华诞，这将是学校发展史上具有里程碑意义的重要时刻。根据《成都大学校友捐赠管理暂行办法》(成大发〔2015〕26号)规定，为优化办学条件，激发爱校之情，热忱欢迎海内外校友、全校师生员工以及社会各界捐资、捐物，助力学校事业发展。</p>
+					</div>
+				</div>
+			</div>
+			<div class="donate-content-item2" id="app">
+				<div class="content-item2-left">
+					<form action="" method="post" id="form_submit">
+						<div class="div-group">
+							<!-- 捐款项目 -->
+							<div class="group-item1">
+								<div class="group-item1-label">
+									<label>捐款类别</label>
+								</div>
+								<div class="group-item1-input">
+									<div>
+										<select class="select-item" id="donate_select" name="donation_type">
+							     			<option value="基本建设项目">基本建设项目</option>
+								     		<option value="学生成长项目">学生成长项目</option>
+								     		<option value="教师发展项目">教师发展项目</option>
+								     		<option value="校园文化建设项目">校园文化建设项目</option>
+								     		<option value="校友工作项目">校友工作项目</option>
+								     		<option value="基金会工作项目">基金会工作项目</option>
+								     		<option value="非限定性项目">非限定性项目</option>
+								     		<option value="校友年度捐赠">校友年度捐赠</option>
+								     		<option value="其他捐赠项目">其他捐赠项目</option>
+								     	</select>
+									</div>
+									<div><span></span></div>
+								</div>
+							</div>
+							<!-- 捐款项目 -->
+							<div class="group-item1">
+								<div class="group-item1-label">
+									<label>捐款项目</label>
+								</div>
+								<div class="group-item1-input">
+									<div>
+										<select class="select-item" id="donate_select2" name="donation_project">
+							     			<option value="基本建设基金">基本建设基金</option>
+								     	</select>
+									</div>
+									<div><span></span></div>
+								</div>
+							</div>
+							<!-- 与成大关系 -->
+							<div class="group-item1 group-item2">
+								<div class="group-item1-label">
+									<label>与成大关系</label>
+								</div>
+								<div class="group-item1-input">
+									<div>
+										<div style="height: 35px;line-height: 35px;width: 80px;margin-left: 10px;">
+											<input type="radio" name="relationship" class="input-radio relationship" style="transform: scale(1.5,1.5);margin-right: 10px;" value="schoolfellow"><span>校友</span>
+										</div>
+										<div style="height: 35px;line-height: 35px;width: 80px;">
+											<input type="radio" name="relationship" value="teachingStaff" class="input-radio relationship" style="transform: scale(1.5,1.5);margin-right: 10px;"><span>教职工</span>
+										</div>
+										<div style="height: 35px;line-height: 35px;width: 80px;">
+											<input type="radio" name="relationship" value="anonymous" class="input-radio relationship" style="transform: scale(1.5,1.5);margin-right: 10px;"><span>匿名</span>
+										</div>
+									</div>
+									<div><span>*</span></div>
+									<p class="relationError">
+										<!--  -->
+									</p>
+								</div>
+							</div>
+							<!-- 姓名 -->
+							<div class="group-item1 group-item2 anonymous other">
+								<div class="group-item1-label">
+									<label>姓名</label>
+								</div>
+								<div class="group-item1-input">
+									<div class="name-item1">
+										<input type="text" class="input-item1" placeholder="请输入您的姓名" v-model="user.username" @blur="showNameError()" name="username" id="username">
+									</div>
+									<div class="name-item2"><span>*</span></div>
+									<p class="nameError" v-html="error.nameError"></p>
+								</div>
+							</div>
+							<!-- 捐款金额 -->
+							<div class="group-item1 group-item2">
+								<div class="group-item1-label">
+									<label>捐款金额</label>
+								</div>
+								<div class="group-item1-input">
+									<div class="money">
+										<input type="number" min="100" placeholder="12.8" style="border-top-left-radius: 5px;border-bottom-left-radius: 5px;" v-model="user.money" @blur="showMoneyError()" name="money" id="money">
+										<nav>元</nav>
+									</div>
+									<div><span>*</span></div>
+									<p class="moneyError" v-html="error.moneyError"></p>
+								</div>
+							</div>
+							<!-- 院系 -->
+							<div class="group-item1 group-item2 schoolfellow" style="display: none;">
+								<div class="group-item1-label">
+									<label>院系</label>
+								</div>
+								<div class="group-item1-input">
+									<div>
+										<input type="text" class="input-item1" placeholder="请输入您的院系" v-model="user.institute" @blur="showInstituteError()" name="institute" id="institute">
+									</div>
+									<div><span>*</span></div>
+									<p class="instituteError" v-html="error.instituteError"></p>
+								</div>
+							</div>
+							<!-- 专业 -->
+							<div class="group-item1 group-item2 schoolfellow" style="display: none;">
+								<div class="group-item1-label">
+									<label>专业</label>
+								</div>
+								<div class="group-item1-input">
+									<div>
+										<input type="text" class="input-item1" placeholder="请输入您的专业" v-model="user.major" @blur="showMajorError()" name="major" id="major">
+									</div>
+									<div><span>*</span></div>
+									<p class="majorError" v-html="error.majorError"></p>
+								</div>
+							</div>
+							<!-- 年级 -->
+							<div class="group-item1 group-item2 schoolfellow" style="display: none;">
+								<div class="group-item1-label">
+									<label>年级</label>
+								</div>
+								<div class="group-item1-input">
+									<div>
+										<input type="text" class="input-item1" placeholder="请输入您的年级" v-model="user.grade" @blur="showGradeError()" name="grade" id="grade">
+									</div>
+									<div><span>*</span></div>
+									<p class="gradeError" v-html="error.gradeError"></p>
+								</div>
+							</div>
+							<!-- 所在部门 -->
+							<div class="group-item1 teachingStaff" style="display: none;">
+								<div class="group-item1-label">
+									<label>所在部门</label>
+								</div>
+								<div class="group-item1-input">
+									<div>
+										<select class="select-item" name="department" name="department">
+							     			<option value="学校办公室 (党委办公室 校长办公室)">学校办公室 (党委办公室 校长办公室)</option>
+								     		<option value="党委组织部（机关党委）">党委组织部（机关党委）</option>
+								     		<option value="纪委办公室（监察处）">纪委办公室（监察处）</option>
+								     		<option value="党委宣传部（新闻中心) 党委统战部">党委宣传部（新闻中心) 党委统战部</option>
+								     		<option value="党委学生工作部（学生处）">党委学生工作部（学生处）</option>
+								     		<option value="党委武装部（保卫处)">党委武装部（保卫处)</option>
+								     		<option value="发展规划处（高等教育研究所）">发展规划处（高等教育研究所）</option>
+								     		<option value="教务处（招生办公室）">教务处（招生办公室）</option>
+								     		<option value="研究生处（学科建设办公室）">研究生处（学科建设办公室）</option>
+								     		<option value="科研处（科技成果转化中心）">科研处（科技成果转化中心）</option>
+								     		<option value="人事处">人事处</option>
+								     		<option value="国际合作与交流处（港澳台办公室）">国际合作与交流处（港澳台办公室）</option>
+								     		<option value="财务处">财务处</option>
+								     		<option value="国有资产管理处">国有资产管理处</option>
+								     		<option value="实验室与设备管理处">实验室与设备管理处</option>
+								     		<option value="后勤处">后勤处</option>
+								     		<option value="基建处">基建处</option>
+								     		<option value="审计处">审计处</option>
+								     		<option value="离退休工作处">离退休工作处</option>
+								     		<option value="工 会">工 会</option>
+								     		<option value="团 委">团 委</option>
+								     	</select>
+									</div>
+									<div><span>*</span></div>
+								</div>
+							</div>
+							<!-- 是否需要发票 -->
+							<div class="group-item1 group-item2">
+								<div class="group-item1-label">
+									<label>是否需要发票</label>
+								</div>
+								<div class="group-item1-input">
+									<div>
+										<div style="height: 35px;line-height: 35px;width: 80px;margin-left: 10px;">
+											<input type="radio" name="invoice" class="input-radio invoice" style="transform: scale(1.5,1.5);margin-right: 10px;" value="yes"><span>是</span>
+										</div>
+										<div style="height: 35px;line-height: 35px;width: 80px;">
+											<input type="radio" name="invoice" class="input-radio invoice" style="transform: scale(1.5,1.5);margin-right: 10px;" value="no"><span>否</span>
+										</div>
+									</div>
+									<div><span>*</span></div>
+									<p class="invoiceError"></p>
+								</div>
+							</div>
+							<!-- 联系电话 -->
+							<div class="group-item1 group-item2 anonymous other">
+								<div class="group-item1-label">
+									<label>联系电话</label>
+								</div>
+								<div class="group-item1-input">
+									<div>
+										<input type="text" class="input-item1" placeholder="请输入您的联系电话" v-model="user.phone" @blur="showPhoneError()" name="phone" id="phone">
+									</div>
+									<div><span>*</span></div>
+									<p class="phoneError"  v-html="error.phoneError"></p>
+								</div>
+							</div>
+							<!-- 邮箱 -->
+							<div class="group-item1 group-item2 anonymous other">
+								<div class="group-item1-label">
+									<label>邮箱</label>
+								</div>
+								<div class="group-item1-input">
+									<div>
+										<input type="text" class="input-item1" placeholder="请输入您的邮箱" v-model="user.email" @blur="showEmailError()" name="email" id="email">
+									</div>
+									<div><span>*</span></div>
+									<p class="emailError"  v-html="error.emailError"></p>
+								</div>
+							</div>
+							<!-- 联系地址 -->
+							<div class="group-item1 group-item2 anonymous other address" style="display: none;">
+								<div class="group-item1-label">
+									<label>联系地址</label>
+								</div>
+								<div class="group-item1-input">
+									<div>
+										<input type="text" class="input-item1" placeholder="请输入您的联系地址" v-model="user.address" @blur="showAddressError()" name="address" id="address">
+									</div>
+									<div><span>*</span></div>
+									<p class="addressError" v-html="error.addressError"></p>
+								</div>
+							</div>
+							<!-- 祝福语 -->
+							<div class="group-item1 group-item2">
+								<div class="group-item1-label">
+									<label>祝福语</label>
+								</div>
+								<div class="group-item1-input">
+									<div>
+										<textarea id="blessing" cols="30" rows="3" placeholder="表示对成大的祝福" class="textrea-item1" name="blessing" id="blessing"></textarea>
+									</div>
+									<div><span>*</span></div>
+								</div>
+							</div>
+							<!-- 订单号 -->
+							<div class="group-item1 group-item2" style="display: none;">
+								<div class="group-item1-label">
+									<label>订单号</label>
+								</div>
+								<div class="group-item1-input">
+									<div>
+										<input type="text" class="input-item1" placeholder="请输入您的订单号" name="WIDRQout_trade_no" id="WIDRQout_trade_no">
+									</div>
+									<div><span>*</span></div>
+									<p class="phoneError"  v-html="error.emailError"></p>
+								</div>
+							</div>
+							<div class="group-submit-btn">
+								<input type="button" class="submit-btn" value="我要捐赠" onclick="GetDateNow()">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<div class="footer-info">
+				<p>
+					<span style="margin-right: 3rem;">地址: 成都市成洛大道2025号</span>
+					<span style="margin-right: 3rem;">版权所有©成都大学</span>
+					<span style="margin-right: 3rem;">蜀ICP备05006454号</span>
+					<span> 川公网安备 51011202000207 号</span>
+				</p>
+				<p>
+					<span style="margin-right: 3rem;">电话: 028-84616300</span>
+					<span style="margin-right: 3rem;">邮编: 610106</span>
+					<a href="#" class="Back-stage"><span>后台管理</span></a>
+					<span style="display: none;">开发人员：陈-张-任</span>
+				</p>
+			</div>
+		</div>
+	</div>
+	<script>
+	  	new Vue({
+			el:'#app',
+			data:{
+				selected: '',
+				text:'',
+				user:{
+					donation_type:"",//捐款类别
+					donation_project:"",//捐款项目
+					username:"",//姓名
+					money:"",//捐款金额
+					relationship:"",//关系
+					phone:"",//电话号码
+					invoice:"",//发票
+					order_number:"",//订单号
+					address:"",//联系地址
+					blessing:"",//祝福语
+					major:"",//专业
+					institute:"",//院系
+					grade:"",//年级
+					department:"",//所属部门
+					email:"",//邮箱
+				},
+				error:{
+					nameError:"",
+					addressError:"",
+					phoneError:"",
+					gradeError:"",
+					majorError:"",
+					instituteError:"",
+					relationError:"",
+					moneyError:"",
+					emailError:"",
+					invoiceError:""
+				}
+			},
+			methods:{
+				// 判断姓名是否为空
+				showNameError:function(){
+					if(this.user.username == ""){
+						this.error.nameError = '<i class="glyphicon glyphicon-warning-sign"><span class="test">姓名不能为空</span>';
+						$("#username").focus();
+					}else{
+						this.error.nameError = "";
+						$(".nameError").empty();
+					}
+				},
+				showMoneyError:function(){
+					if(this.user.money == ""){
+						this.error.moneyError = '<i class="glyphicon glyphicon-warning-sign"><span class="test">金额不能为空</span>';
+						$("#money").focus();
+					}else{
+						this.error.moneyError = "";
+						$(".moneyError").empty();
+					}
+				},
+				showPhoneError:function(){
+					if(this.user.phone == ""){
+						this.error.phoneError = '<i class="glyphicon glyphicon-warning-sign"><span class="test">请输入11位号码</span>';
+						$("#phone").focus();
+					}else if(!/^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/.test(this.user.phone)){
+						this.error.phoneError = '<i class="glyphicon glyphicon-warning-sign"><span class="test">请填写有效的11位手机号码</span>';
+						$("#phone").focus();
+					}else{
+						this.error.phoneError = "";
+						$(".phoneError").empty();
+					}
+				},
+				showAddressError:function(){
+					if(this.user.address == ""){
+						this.error.addressError = '<i class="glyphicon glyphicon-warning-sign"><span class="test">地址不能为空</span>';
+						$("#address").focus();
+					}else{
+						this.error.addressError = "";
+						$(".addressError").empty();
+					}
+				},
+				showMajorError:function(){
+					if(this.user.major == ""){
+						this.error.majorError = '<i class="glyphicon glyphicon-warning-sign"><span class="test">专业不能为空</span>';
+						$("#major").focus();
+					}else{
+						this.error.majorError = "";
+						$(".majorError").empty();
+					}
+				},
+				showInstituteError:function(){
+					if(this.user.institute == ""){
+						this.error.instituteError = '<i class="glyphicon glyphicon-warning-sign"><span class="test">院系不能为空</span>';
+						$("#institute").focus();
+					}else{
+						this.error.instituteError = "";
+						$(".instituteError").empty();
+					}
+				},
+				showGradeError:function(){
+					if(this.user.grade == ""){
+						this.error.gradeError = '<i class="glyphicon glyphicon-warning-sign"><span class="test">年级不能为空</span>';
+						$("#grade").focus();
+					}else{
+						this.error.gradeError = "";
+						$(".gradeError").empty();
+					}
+				},
+				showEmailError:function(){
+					if(this.user.email == ""){
+						this.error.emailError = '<i class="glyphicon glyphicon-warning-sign"><span class="test">邮箱不能为空</span>';
+						$("#email").focus();
+					}else if(!/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test(this.user.email)){
+						this.error.emailError = '<i class="glyphicon glyphicon-warning-sign"><span class="test">邮箱格式不正确</span>';
+						$("#email").focus();
+					}else{
+						this.error.emailError = "";
+						$(".emailError").empty();
+					}
+				}
+			}
+		});
+	</script>
+</body>
+</html>
